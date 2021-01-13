@@ -130,3 +130,6 @@ dmypy.json
 
 # PyCharm related directory
 .idea/
+
+# Temporary and working data too big for git
+WorkingData/
