@@ -1,0 +1,31 @@
+# where all data downloaded and processed will end up. If you change it, you probably want to update the .gitignore,
+# too. Final model won't end up here, so this dir is safe to delete any time you want to start from scratch
+working-dir: '../WorkingData/'
+
+# path to categories file, which describes what will end up in dataset
+categories-path: '../Data/categories.json'
+
+# wiki files to use in dataset creation
+wiki-download-urls:
+  - 'https://dumps.wikimedia.org/srwiki/20201201/srwiki-20201201-pages-articles-multistream.xml.bz2'
+  - 'https://dumps.wikimedia.org/hrwiki/20201201/hrwiki-20201201-pages-articles-multistream.xml.bz2'
+
+# enable this if you're curious about how many articles does each category have
+generate-index-cardinality-list: no
+
+# this should match the order of wiki-download-urls. I need this because category tab respects wiki language
+category-strings:
+  - 'Категорија'
+  - 'Kategorija'
+
+# yes if you want to remove xml wiki files once they serve their use, as they take up a lot of space. Corresponding
+# .bz2 files will remain so you don't need to re-download anything. They take up 10x less space, but keep in mind that
+# decompression takes a while
+delete-xml-files: yes
+
+# where in working-dir will the dataset be saved
+dataset-path: 'dataset.csv'
+
+# file which will define what the model classifies. It's a mapping from classification label names to wiki categories
+# that belong to it
+label-categories-path: '../Data/categories.json'
