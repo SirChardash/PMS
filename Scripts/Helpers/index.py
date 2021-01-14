@@ -21,7 +21,7 @@ def create_index(input_path, output_path, category_string, generate_index_cardin
         if '<id>' in line and look_for_id:
             doc_id = re.sub('^.*<id>', '', re.sub('</id>.*$', '', line, flags=re.DOTALL), flags=re.DOTALL)
             look_for_id = False
-        if ('[[%s' % category_string) in line and '<' not in line:
+        if f'[[{category_string}' in line and '<' not in line:
             categories = categories_from_line(line, category_string)
             for category in categories:
                 if category not in index:
@@ -47,7 +47,7 @@ def categories_from_line(line, category_string):
     """Categories are found at the end of a doc. A series of regex is applied to extract a list of categories.
     category_string is used to pass category tag name, as it is different between different languages."""
     categories_string = re.sub(']].*$', '', line, flags=re.DOTALL)
-    categories_string = re.sub('^.*\\[\\[%s:\\s*' % category_string, '', categories_string, flags=re.DOTALL)
+    categories_string = re.sub(f'^.*\\[\\[{category_string}:\\s*', '', categories_string, flags=re.DOTALL)
     categories_string = to_latin(categories_string)
     return re.compile('\\s*\\|\\s*').split(categories_string)
 

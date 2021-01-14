@@ -34,32 +34,32 @@ Path(working_dir).mkdir(exist_ok=True)
 # download wiki files
 for i in range(wiki_count):
     if os.path.exists(wiki_local_archives[i]):
-        print('skipping download of %s as you already have it downloaded' % wiki_local_archives[i])
+        print(f'skipping download of {wiki_local_archives[i]} as you already have it downloaded')
     elif os.path.exists(wiki_local_xmls[i]):
-        print('skipping download of %s as you already have the xml' % wiki_local_archives[i])
+        print(f'skipping download of {wiki_local_archives[i]} as you already have the xml')
     elif os.path.exists(wiki_docs[i]):
-        print('skipping download of %s as you already have the docs extracted' % wiki_local_archives[i])
+        print(f'skipping download of {wiki_local_archives[i]} as you already have the docs extracted')
     else:
-        print('%s - downloading from %s' % (datetime.now(), wiki_download_urls[i]))
+        print(f'{datetime.now()} - downloading from {wiki_download_urls[i]}')
         download(wiki_download_urls[i], wiki_local_archives[i])
 
 # extract wiki files from downloaded archives
 for i in range(wiki_count):
     if os.path.exists(wiki_local_xmls[i]):
-        print('skipping extraction of %s as you already have the xml' % wiki_local_archives[i])
+        print(f'skipping extraction of {wiki_local_archives[i]} as you already have the xml')
     elif os.path.exists(wiki_docs[i]):
-        print('skipping download of %s as you already have the docs extracted' % wiki_local_archives[i])
+        print(f'skipping download of {wiki_local_archives[i]} as you already have the docs extracted')
     else:
-        print('%s - extracting %s' % (datetime.now(), wiki_local_archives[i]))
+        print(f'{datetime.now()} - extracting {wiki_local_archives[i]}')
         extract_bz2(wiki_local_archives[i], wiki_local_xmls[i])
 
 # create and load category indexes
 indexes = list()
 for i in range(wiki_count):
     if os.path.exists(wiki_indexes[i]):
-        print('skipping index generation for %s as it already exists' % wiki_local_xmls[i])
+        print(f'skipping index generation for {wiki_local_xmls[i]} as it already exists')
     else:
-        print('%s - creating index %s' % (datetime.now(), wiki_indexes[i]))
+        print(f'{datetime.now()} - creating index {wiki_indexes[i]}')
         create_index(wiki_local_xmls[i], wiki_indexes[i], category_strings[i], generate_index_cardinality_list)
     indexes.append(wiki_indexes[i])
 indexes = list(map(lambda index: load_index(index), indexes))
@@ -67,21 +67,21 @@ indexes = list(map(lambda index: load_index(index), indexes))
 # extract wiki documents from the dumps, doesn't work on Windows
 for i in range(wiki_count):
     if os.path.exists(wiki_docs[i]):
-        print('skipping doc extraction of %s as %s exists' % (wiki_local_xmls[i], wiki_extracted[i]))
+        print(f'skipping doc extraction of {wiki_local_xmls[i]} as {wiki_extracted[i]} exists')
     else:
-        print('%s - extracting docs from %s to %s' % (datetime.now(), wiki_local_xmls[i], wiki_extracted[i]))
+        print(f'{datetime.now()} - extracting docs from {wiki_local_xmls[i]} to {wiki_extracted[i]}')
         extract_docs(wiki_local_xmls[i], wiki_extracted[i])
 
 # notify that big files aren't needed anymore
 for i in range(wiki_count):
     if os.path.exists(wiki_local_archives[i]) and os.path.exists(wiki_local_xmls[i]):
-        print('it\'s safe to delete %s since you don\'t need it anymore and still have the .bz2' % wiki_local_xmls[i])
+        print(f'it\'s safe to delete {wiki_local_xmls[i]} since you don\'t need it anymore and still have the .bz2')
 
 # create multi-label dataset
 if os.path.exists(dataset_path):
-    print('dataset %s exists. Delete stuff in %s if you want to repeat related steps' % (dataset_path, working_dir))
+    print(f'dataset {dataset_path} exists. Delete stuff in {working_dir} if you want to repeat related steps')
 else:
-    print('%s - creating dataset for labels from %s' % (datetime.now(), label_categories_path))
+    print(f'{datetime.now()} - creating dataset for labels from {label_categories_path}')
     create_dataset(indexes, wiki_docs, label_categories_path, dataset_path)
 
-print('%s - done' % datetime.now())
+print(f'{datetime.now()} - done')

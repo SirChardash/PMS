@@ -25,7 +25,7 @@ def create_dataset(indexes: list, wiki_docs: list, categories, out_path):
         index = indexes[i]
         wiki_files = glob.glob(wiki_docs[i] + '/*')
         for wiki_file in wiki_files:
-            print('%s - reading %s' % (datetime.now(), wiki_file))
+            print(f'{datetime.now()} - reading {wiki_file}')
             file = open(wiki_file, 'r', encoding='utf-8')
             line = file.readline()
             while line != '':
@@ -50,7 +50,7 @@ def create_dataset(indexes: list, wiki_docs: list, categories, out_path):
 
                 line = file.readline()
 
-    print('%s - writing index to %s' % (datetime.now(), out_path))
+    print(f'{datetime.now()} - writing index to {out_path}')
     file_out = open(out_path, 'w', encoding='utf-8', newline='')
     output = csv.writer(file_out)
     header = ['id']
