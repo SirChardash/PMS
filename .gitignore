@@ -133,3 +133,4 @@ dmypy.json
 
 # Temporary and working data too big for git
 WorkingData/
+Model/

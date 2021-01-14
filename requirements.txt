@@ -1,4 +1,7 @@
+# you want python 3.6, 3.7 is a no-no
 clint==0.5.1
 PyYAML==5.3.1
 tqdm==4.56.0
 wikiextractor
+tensorflow==2.4.0 # update setuptools with pip install setuptools --upgrade --ignore-installed if setuptools is failing
+ktrain==0.25.3

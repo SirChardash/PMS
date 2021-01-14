@@ -1,0 +1,37 @@
+# path to load dataset from
+dataset-path: '../WorkingData/dataset.csv'
+
+# model that will be used in ktrain.text.Transformer
+model-name: 'distilbert-base-uncased'
+
+# lazy way to split dataset into training and validation data. Will always return the same sets, but dataset creation
+# is randomized. Works on i % val_ratio == 0 logic, so ratio of 5 is actually 4 to 1
+train-to-val-ratio: 5
+
+# labels to use in model. They must exist in dataset, but you don't need to take all of them
+labels:
+  - 'botanika'
+  - 'zoologija'
+  - 'biohemija'
+  - 'ekologija'
+
+# vector length that ktrain.text.Transformer will use to represent docs. 500 is a standard
+transformer-max-len: 500
+
+# affects the speed and memory consumption during learning process. Define transformer-max-len, then put this value as
+# high as you can. Use 500 and 1 on 4Gb of graphic memory
+learner-batch-size: 1
+
+# learning rate parameter. Get it from learner.lr_find diagram with elbow rule. It mostly boils down to somewhere
+# around 10^-5
+max-learning-rate: 0.00005
+
+# how many iterations should learner take. 4 is a good choice
+learner-epoch-count: 4
+
+# where to save the model. Don't put it in WorkingData
+model-save-path: '../Model/predictor'
+
+# turn this on when you want to run estimate learning rate process and determine optimal learning rate. Will not train
+# an actual model
+estimate-learning-rate-mode: no

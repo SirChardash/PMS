@@ -89,3 +89,28 @@ def get_doc(wiki_file):
         return [doc]
     else:
         return []
+
+
+def load_dataset_csv(file_path, val_ratio: int, category_count: int):
+    """Loads a multi-label dataset. Returns data split into training and validation compatible with
+    ktrain.text.Transformer. val_ratio works on i % val_ratio == 0, so 5 means 20%. Sue me."""
+    training_texts = []
+    training_labels = []
+    validation_texts = []
+    validation_labels = []
+
+    doc_i = 0
+    for entry in csv.reader(open(file_path, 'r', encoding='utf-8')):
+        doc_i += 1
+        if doc_i == 1:
+            continue
+        text = entry[category_count + 1]
+        labels = list(map(int, entry[1:category_count + 1]))
+        if doc_i % val_ratio == 0:
+            validation_texts.append(text)
+            validation_labels.append(labels)
+        else:
+            training_texts.append(text)
+            training_labels.append(labels)
+
+    return training_texts, training_labels, validation_texts, validation_labels
