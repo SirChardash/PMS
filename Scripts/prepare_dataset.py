@@ -73,12 +73,10 @@ for i in range(wiki_count):
         print('%s - extracting docs from %s to %s' % (datetime.now(), wiki_local_xmls[i], wiki_extracted[i]))
         extract_docs(wiki_local_xmls[i], wiki_extracted[i])
 
-# remove xml files now that they're processed and too big to leave around. Or don't. You can change that in config.
-if delete_xml_files:
-    for i in range(wiki_count):
-        if os.path.exists(wiki_local_archives[i]) and os.path.exists(wiki_local_xmls[i]):
-            print('removing %s since you don\'t need it anymore and still have the .bz2' % wiki_local_xmls[i])
-            os.remove(wiki_local_xmls[i])
+# notify that big files aren't needed anymore
+for i in range(wiki_count):
+    if os.path.exists(wiki_local_archives[i]) and os.path.exists(wiki_local_xmls[i]):
+        print('it\'s safe to delete %s since you don\'t need it anymore and still have the .bz2' % wiki_local_xmls[i])
 
 # create multi-label dataset
 if os.path.exists(dataset_path):

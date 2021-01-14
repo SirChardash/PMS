@@ -18,11 +18,6 @@ category-strings:
   - 'Категорија'
   - 'Kategorija'
 
-# yes if you want to remove xml wiki files once they serve their use, as they take up a lot of space. Corresponding
-# .bz2 files will remain so you don't need to re-download anything. They take up 10x less space, but keep in mind that
-# decompression takes a while
-delete-xml-files: yes
-
 # where in working-dir will the dataset be saved
 dataset-path: 'dataset.csv'
 
