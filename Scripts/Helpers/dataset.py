@@ -44,7 +44,7 @@ def create_dataset(indexes: list, wiki_docs: list, categories, out_path):
                         for doc in docs:
                             row = [doc_id]
                             row.extend(flags)
-                            row.extend([to_latin(str.replace(doc, '\n', ''))])
+                            row.extend([clean(to_latin(str.replace(doc, '\n', '')))])
                             if len(doc) < 130_000:
                                 csv_lines.append(row)
 
@@ -70,22 +70,22 @@ def get_id(doc_line):
 
 def clean(doc):
     """Performs a set of cleaning and trimming that I found helpful, which aren't covered by what WikiExtractor does."""
-    clean_doc = re.sub('\\s+', ' ', doc)
-    clean_doc = re.sub('(__BEZKN__)|(-{)|(}-)|(\\(\\))|(\\(,\\s\\))', '', clean_doc)
+    clean_doc = re.sub('(__[A-ZŽĐŠČĆ]+__)|(-{)|(}-)|(\\(\\))|(\\(,\\s\\))', '', doc)
+    clean_doc = re.sub('\\s+', ' ', clean_doc)
     return clean_doc.lstrip()
 
 
 def get_doc(wiki_file):
-    """Takes the file reader and reads a single wiki doc. Returns it cleaned up. Doesn't return anything if the doc is
-    too short. This helps remove a lot of non-informative articles and generally helps. Can return multiple docs, which
-    I tried by making each paragraph a doc. This was counter-productive, as isolated paragraphs very often lose the
-    topic that the parent doc has."""
+    """Takes the file reader and reads a single wiki doc. Doesn't return anything if the doc is too short. This helps
+    remove a lot of non-informative articles and generally helps. Can return multiple docs, which I tried by making
+    each paragraph a doc. This was counter-productive, as isolated paragraphs very often lose the topic that the parent
+    doc has."""
     line = wiki_file.readline()
     doc = ''
     while '</doc>' not in line:
         doc += ' ' + line.rstrip('\n')
         line = wiki_file.readline()
     if len(doc) > 200:
-        return [clean(doc)]
+        return [doc]
     else:
         return []
