@@ -33,7 +33,7 @@ def extract_docs(source, destination):
     plain-text extraction. It doesn't retain categories, only doc ids. Parameters don't need to be tinkered with. It
     is set to split output into 50Mb chunks, allowing for plain text inspection with most text editors. WikiExtractor
     doesn't work on Windows, and is the only component that doesn't."""
-    subprocess.call(['python', '-m', 'wikiextractor.WikiExtractor',
+    subprocess.call(['python3', '-m', 'wikiextractor.WikiExtractor',
                      '--quiet',
                      source,
                      '-b', '50M',
