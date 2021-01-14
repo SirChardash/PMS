@@ -16,7 +16,6 @@ with open(r'../Config/dataset.yaml', encoding='utf-8') as file:
 
 category_strings = config['category-strings']
 generate_index_cardinality_list = config['generate-index-cardinality-list']
-delete_xml_files = config['delete-xml-files']
 label_categories_path = config['label-categories-path']
 
 working_dir = config['working-dir']
